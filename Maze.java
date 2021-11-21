@@ -23,7 +23,7 @@ public class Maze extends JPanel implements KeyListener
 	
 	public Maze() 
 	{
-		frame = new JFrame("Pratham's Maze");
+		frame = new JFrame("Maze Game");
 		frame.setSize(1400, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true); 
@@ -81,15 +81,17 @@ public class Maze extends JPanel implements KeyListener
 				case 3: g2.drawString("West",600,575); break;
 			}
 		}
-		if(is3D)	{
+		if(is3D)	
+		{
 			createWalls();
-			for(int i = 0; i < walls.size(); i++) {
-				if(walls.size()!=0) {
+			for(int i = 0; i < walls.size(); i++) 
+			{
+				if(walls.size()!=0) 
+				{
 					g2.setColor(Color.black);
 					g2.draw(walls.get(i).getDrawing());
 					g2.setPaint(walls.get(i).getPaint());
 					g2.fill(walls.get(i).getDrawing());
-					
 				}
 			} 
 			
@@ -138,8 +140,8 @@ public class Maze extends JPanel implements KeyListener
 		{
 			g2.setColor(Color.GREEN);
 			font = new Font("Arial", Font.BOLD, 200);
-			g2.drawString("Congratulations on finishing the Maze!",400,400);
-			g2.drawString("You Finished in " + getElapsedTime() + " seconds!", 500, 500);
+			g2.drawString("Congratulations! You finished the Maze!",400,400);
+			g2.drawString("You used " + hero.getNumberOfMoves() + " moves and finished in " + getElapsedTime() + " seconds!", 400, 450);
 			g2.setColor(Color.WHITE);
 			font = new Font("Arial", Font.BOLD, 30);
 			isRunning = false;
@@ -147,12 +149,11 @@ public class Maze extends JPanel implements KeyListener
 		
 		frame.repaint();
 	}
-
+ 
 	public static void main(String[] args) { Maze app = new Maze(); }
 	public void keyTyped(KeyEvent e) {}
 	public void keyPressed(KeyEvent e) 
 	{
-		System.out.println(e.getKeyCode());
 		if(e.getKeyCode() == 32)
 			is3D = !is3D;
 		if(is3D && e.getKeyCode() == 10)
@@ -175,7 +176,6 @@ public class Maze extends JPanel implements KeyListener
 					maze[r][c] = text.charAt(c);
 				r++;
 			}
-			
 		} 
 		catch (IOException e) 
 		{
@@ -194,27 +194,33 @@ public class Maze extends JPanel implements KeyListener
 		{
 			case 0: //up
 				for(int n = 0; n < 5; n++) {
-					try {
-						if(maze[rr-n][cc]=='#') {
+					try 
+					{
+						if(maze[rr-n][cc]=='#') 
+						{
 							walls.add(getFrontWall(n));
 							break;
 						}
-						if(maze[rr-n][cc-1]=='#') { //check left
+						if(maze[rr-n][cc-1]=='#') 
+						{ //check left
 							walls.add(getFloor(n));
 							walls.add(getLeft(n));
 							walls.add(getCeiling(n));
 						}
-						else {
+						else 
+						{
 							walls.add(getLeftPath(n));
 							walls.add(getCeilingLeft(n));
 							walls.add(getFloorLeft(n));
 						}
-						if(maze[rr-n][cc+1]=='#') { //check right
+						if(maze[rr-n][cc+1]=='#') 
+						{ //check right
 							walls.add(getRight(n));
 							walls.add(getCeiling(n));
 							walls.add(getFloor(n));
 						}
-						else {
+						else 
+						{
 							walls.add(getRightPath(n));
 							walls.add(getCeilingRight(n));
 							walls.add(getFloorRight(n));
@@ -227,28 +233,35 @@ public class Maze extends JPanel implements KeyListener
 			break;
 			
 			case 1: //right
-				for(int n = 0; n < 5; n++) {
-					try {
-						if(maze[rr][cc+n]=='#') {
+				for(int n = 0; n < 5; n++)
+				{
+					try 
+					{
+						if(maze[rr][cc+n]=='#') 
+						{
 							walls.add(getFrontWall(n));
 							break;
 						}
-						if(maze[rr-1][cc+n]=='#') { 
+						if(maze[rr-1][cc+n]=='#') 
+						{ 
 							walls.add(getLeft(n));
 							walls.add(getCeiling(n));
 							walls.add(getFloor(n));
 						}
-						else {
+						else 
+						{
 							walls.add(getLeftPath(n));
 							walls.add(getCeilingLeft(n));
 							walls.add(getFloorLeft(n));
 						}
-						if(maze[rr+1][cc+n]=='#') { 
+						if(maze[rr+1][cc+n]=='#') 
+						{ 
 							walls.add(getRight(n));
 							walls.add(getCeiling(n));
 							walls.add(getFloor(n));
 						}
-						else {
+						else 
+						{
 							walls.add(getRightPath(n));
 							walls.add(getCeilingRight(n));
 							walls.add(getFloorRight(n));
@@ -260,37 +273,48 @@ public class Maze extends JPanel implements KeyListener
 				break;
 			
 			case 2: //down
-				for(int n = 0; n < 5; n++) {
-					try {
-						if(maze[rr+n][cc]=='#') {
+				for(int n = 0; n < 5; n++) 
+				{
+					try 
+					{
+						if(maze[rr+n][cc]=='#') 
+						{
 							walls.add(getFrontWall(n));
 							break;
 						}
-						if(maze[rr+n][cc]=='#') {
+						if(maze[rr+n][cc]=='#') 
+						{
 							walls.add(getFrontWall(n));
 						}
-						if(maze[rr+n][cc+1]=='#') { 
-							if(hero.getLoc().isTagged(rr+n, cc)) {
+						if(maze[rr+n][cc+1]=='#') 
+						{ 
+							if(hero.getLoc().isTagged(rr+n, cc)) 
+							{
 								Wall theWall = getFloor(n);
 								theWall.setType("pink");
 								walls.add(theWall);
 							}
 							else
+							{
 								walls.add(getFloor(n));
+							}
 							walls.add(getLeft(n));
 							walls.add(getCeiling(n));
 						}
-						else {
+						else 
+						{
 							walls.add(getLeftPath(n));
 							walls.add(getCeilingLeft(n));
 							walls.add(getFloorLeft(n));
 						}
-						if(maze[rr+n][cc-1]=='#'){ 
+						if(maze[rr+n][cc-1]=='#')
+						{ 
 							walls.add(getRight(n));
 							walls.add(getCeiling(n));
 							walls.add(getFloor(n));
 						}
-						else {
+						else 
+						{
 							walls.add(getRightPath(n));
 							walls.add(getCeilingRight(n));
 							walls.add(getFloorRight(n));
@@ -302,39 +326,44 @@ public class Maze extends JPanel implements KeyListener
 				break;
 			
 			case 3: //left
-				for(int n = 0; n < 5; n++) {
-					try {
-						if(maze[rr][cc-n]=='#') {
+				for(int n = 0; n < 5; n++) 
+				{
+					try 
+					{
+						if(maze[rr][cc-n]=='#') 
+						{
 							walls.add(getFrontWall(n));
 							break;
 						}
-						if(maze[rr+1][cc-n]=='#') {
+						if(maze[rr+1][cc-n]=='#') 
+						{
 							walls.add(getLeft(n));
 							walls.add(getCeiling(n));
 							walls.add(getFloor(n));
 						}
-						else {
+						else 
+						{
 							walls.add(getLeftPath(n));
 							walls.add(getCeilingLeft(n));
 							walls.add(getFloorLeft(n));
 						}
-						if(maze[rr-1][cc-n]=='#') {
+						if(maze[rr-1][cc-n]=='#') 
+						{
 							walls.add(getRight(n));
 							walls.add(getCeiling(n));
 							walls.add(getFloor(n));
 													
 						}
-						else {
+						else 
+						{
 							walls.add(getRightPath(n));
 							walls.add(getCeilingRight(n));
 							walls.add(getFloorRight(n));
 						}
 					}
 					catch(ArrayIndexOutOfBoundsException e) {}
-				}
-					
-				break;
-			
+				}	
+			break;
 		}
 	}
 	public Wall getLeftPath(int n) 
